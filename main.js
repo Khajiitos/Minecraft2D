@@ -42,12 +42,7 @@ function tick() {
     }
 
     for (let entityElement of window.minecraft2d.entitiesDOM) {
-        let blockUnderFeet = window.minecraft2d.getBlockAt(Math.floor(entityElement.entity.position.x), Math.floor(entityElement.entity.position.y));
-        if (blockUnderFeet === null || blockUnderFeet.blockTypeId === 0) {
-            entityElement.entity.position.y -= 0.15;
-        }
-        entityElement.style.left = entityElement.entity.position.x * 64 + 'px';
-        entityElement.style.bottom = entityElement.entity.position.y * 64 + 'px';
+        entityElement.entity.tick();
     }
 }
 
