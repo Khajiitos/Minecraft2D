@@ -11,6 +11,10 @@ window.minecraft2d.createEntity(player);
 window.minecraft2d.player = player;
 window.minecraft2d.player.position.y = 8;
 window.minecraft2d.keysPressed = {};
+window.minecraft2d.mousePos = {
+    x: 0.0,
+    y: 0.0
+};
 
 window.minecraft2d.isKeyPressed = function(key) {
     return typeof window.minecraft2d.keysPressed[key] === 'undefined' ? false : window.minecraft2d.keysPressed[key] === true;
@@ -22,6 +26,13 @@ window.addEventListener('keydown', (ev) => {
 
 window.addEventListener('keyup', (ev) => {
     window.minecraft2d.keysPressed[ev.key.toLowerCase()] = false;
+});
+
+window.addEventListener('mousemove', (ev) => {
+    window.minecraft2d.mousePos = {
+        x: ev.clientX,
+        y: ev.clientY
+    };
 });
 
 function tick() {
@@ -44,6 +55,8 @@ function tick() {
     for (let entityElement of window.minecraft2d.entitiesDOM) {
         entityElement.entity.tick();
     }
+
+    window.minecraft2d.updateCameraOffset();
 }
 
 setInterval(tick, 50);

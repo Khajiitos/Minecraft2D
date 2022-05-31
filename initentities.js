@@ -8,6 +8,7 @@ class Entity {
     rotation = 0.0;
     boundingBoxHeight = 1.0;
     boundingBoxWidth = 1.0;
+    eyePosYOffset = 0.8;
     texture = '';
     domElement = null;
 
@@ -35,7 +36,17 @@ class Player extends Entity {
         super();
         this.boundingBoxHeight = 1.85;
         this.boundingBoxWidth = 0.925;
+        this.eyePosYOffset = 1.55;
         this.texture = 'player.png';
+    }
+
+    tick() {
+        super.tick();
+        const eyePosX = this.position.x;
+        const eyePosY = this.position.y + this.eyePosYOffset;
+        const mouseX = window.minecraft2d.mousePos.x / 64;
+        const mouseY = window.minecraft2d.mousePos.y / 64;
+        this.rotation = (Math.atan2(eyePosY - mouseY, mouseX - eyePosX) * 180.0 / Math.PI + 180.0) % 360.0;
     }
 }
 
