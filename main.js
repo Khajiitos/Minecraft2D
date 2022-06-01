@@ -13,6 +13,12 @@ window.minecraft2d.isKeyPressed = function(key) {
 };
 
 window.addEventListener('keydown', (ev) => {
+
+    if (ev.key === 'x') {
+        window.minecraft2d.toggleDebugScreen();
+        window.minecraft2d.updateDebugScreen();
+    }
+
     window.minecraft2d.keysPressed[ev.key.toLowerCase()] = true;
 });
 
@@ -52,6 +58,7 @@ function tick() {
     }
 
     window.minecraft2d.updateCameraOffset();
+    window.minecraft2d.updateDebugScreen();
 }
 
 setInterval(tick, 50);

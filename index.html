@@ -11,6 +11,7 @@
     <script src="initentities.js"></script>
     <script src="worldgenerator.js"></script>
     <script src="cameraoffset.js"></script>
+    <script src="debugscreen.js"></script>
 
     <style id="cameraoffsets">
         .blockstack, .entity {
@@ -21,6 +22,12 @@
 <body>
     <div id="blockstacks"></div>
     <div id="entities"></div>
+
+    <div id="debugscreen" style="display: none;">
+        <p id="debuggamename" class="pdebug">"Minecraft" 2D</p>
+        <p id="debugposition" class="pdebug">XY: 0.000 / 0.000</p>
+        <p id="debugrotation" class="pdebug">Rotation: 0.0</p>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

@@ -32,3 +32,16 @@ html {
     position: absolute;
     bottom: 0;
 }
+
+#debugscreen {
+    position: absolute;
+}
+
+.pdebug {
+    font-family: monospace;
+    font-size: 15px;
+    color: white;
+    margin: 0px;
+    padding: 3px;
+    background-color: rgb(50, 50, 50, 0.3);
+}
