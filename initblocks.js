@@ -30,7 +30,7 @@ window.minecraft2d.createDOMBlock = function(block) {
     domblock.classList.add('block');
     domblock.block = block;
     domblock.src = 'assets/blocks/' + window.minecraft2d.blocktypes[block.blockTypeId].texture;
-    return domblock;
+    return domblock;    
 };
 
 window.minecraft2d.updateBlock = function(x, y, block) {
