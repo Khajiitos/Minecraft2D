@@ -58,6 +58,9 @@ window.minecraft2d.ensureBlockStack = function(x) {
         document.getElementById('blockstacks').appendChild(blockStack);
         blockStack.blocks = [];
         window.minecraft2d.blockStacks[x] = blockStack;
+        return false;
+    } else {
+        return true;
     }
 };
 
