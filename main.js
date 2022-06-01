@@ -1,11 +1,3 @@
-for (let i = 0; i < 64; i++) {
-    window.minecraft2d.updateBlock(i, 0, new window.minecraft2d.Block(4));
-    window.minecraft2d.updateBlock(i, 1, new window.minecraft2d.Block(2));
-    window.minecraft2d.updateBlock(i, 2, new window.minecraft2d.Block(2));
-    window.minecraft2d.updateBlock(i, 3, new window.minecraft2d.Block(2));
-    window.minecraft2d.updateBlock(i, 4, new window.minecraft2d.Block(1));
-}
-
 let player = new window.minecraft2d.Player;
 window.minecraft2d.createEntity(player);
 window.minecraft2d.player = player;
@@ -36,6 +28,9 @@ window.addEventListener('mousemove', (ev) => {
 });
 
 function tick() {
+
+    window.minecraft2d.handleWorldGeneration();
+
     if (window.minecraft2d.isKeyPressed('d')) {
         window.minecraft2d.player.position.x += 0.175;
     }

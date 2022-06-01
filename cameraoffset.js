@@ -15,6 +15,16 @@ window.minecraft2d.updateCameraOffset = function() {
     `;
 };
 
+window.minecraft2d.getVisibleStacks = function() {
+    let stacks = [];
+
+    for (let pos = -Math.floor(window.minecraft2d.cameraOffset.x) - 128; pos <= window.innerWidth - window.minecraft2d.cameraOffset.x + 128; pos += 64) {
+        stacks.push(Math.floor(pos / 64.0));
+    }
+
+    return stacks;
+};
+
 window.addEventListener('resize', (ev) => {
     window.minecraft2d.updateCameraOffset();
 });
