@@ -44,9 +44,9 @@ class Player extends Entity {
         super.tick();
         const eyePosX = this.position.x;
         const eyePosY = this.position.y + this.eyePosYOffset;
-        const mouseX = window.minecraft2d.mousePos.x / 64;
-        const mouseY = window.minecraft2d.mousePos.y / 64;
-        this.rotation = (Math.atan2(eyePosY - mouseY, mouseX - eyePosX) * 180.0 / Math.PI + 180.0) % 360.0;
+        const mouseX = window.minecraft2d.getGameCursorPosition().x;
+        const mouseY = window.minecraft2d.getGameCursorPosition().y;
+        this.rotation = Math.atan2(mouseY - eyePosY, mouseX - eyePosX) * 180.0 / Math.PI;
     }
 }
 

@@ -3,6 +3,7 @@ html {
     padding: 0;
     overflow: hidden;
     background-color: cornflowerblue;
+    cursor: url('assets/cursor.png'), default;
 }
 
 .block {
