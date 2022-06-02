@@ -45,3 +45,19 @@ html {
     padding: 3px;
     background-color: rgb(50, 50, 50, 0.3);
 }
+
+#hotbar {
+    position: absolute;
+    display: flex;
+    background-color: rgb(85, 85, 85, 0.9);
+    width: 432px;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+.hotbaritem {
+    outline: 1px solid black;
+    height: 48px;
+    width: 100%;
+}
