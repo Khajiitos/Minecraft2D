@@ -47,6 +47,47 @@ class Player extends Entity {
         const mouseX = window.minecraft2d.getGameCursorPosition().x;
         const mouseY = window.minecraft2d.getGameCursorPosition().y;
         this.rotation = Math.atan2(mouseY - eyePosY, mouseX - eyePosX) * 180.0 / Math.PI;
+
+        if (window.minecraft2d.isKeyPressed('d')) {
+            window.minecraft2d.player.position.x += 0.175;
+        }
+        if (window.minecraft2d.isKeyPressed('a')) {
+            window.minecraft2d.player.position.x -= 0.175;
+        }
+        if (window.minecraft2d.isKeyPressed(' ')) {
+            window.minecraft2d.player.position.y += 0.3;
+        }
+        window.minecraft2d.handleBreakingBlocks();
+    }
+}
+
+window.minecraft2d.handleBreakingBlocks = function() {
+    if (!window.minecraft2d.hoveredBlock ||
+    window.minecraft2d.hoveredBlock.blockTypeId === 0 ||
+    window.minecraft2d.hoveredBlock.blockTypeId === 4 ||
+    !window.minecraft2d.leftMousePressed) {
+        window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        return;
+    }
+
+    const blockCenterX = window.minecraft2d.hoveredBlock.x + 0.5;
+    const blockCenterY = window.minecraft2d.hoveredBlock.y + 0.5;
+
+    const eyePosX = window.minecraft2d.player.position.x;
+    const eyePosY = window.minecraft2d.player.position.y + window.minecraft2d.player.eyePosYOffset;
+
+    if (Math.sqrt(Math.pow(blockCenterX - eyePosX, 2) + Math.pow(blockCenterY - eyePosY, 2)) > 3.0) {
+        window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        return;
+    }
+
+    if (window.minecraft2d.hoveredBlockDestroyProgress === -1.0) {
+        window.minecraft2d.hoveredBlockDestroyProgress = 0.0;
+    }
+    window.minecraft2d.hoveredBlockDestroyProgress += 0.06;
+    if (window.minecraft2d.hoveredBlockDestroyProgress >= 1.0) {
+        window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        window.minecraft2d.updateBlock(window.minecraft2d.hoveredBlock.x, window.minecraft2d.hoveredBlock.y, new Block(0));
     }
 }
 

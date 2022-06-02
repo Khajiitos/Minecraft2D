@@ -25,11 +25,29 @@ window.minecraft2d.Block = Block;
 
 window.minecraft2d.blockStacks = [];
 
+window.minecraft2d.hoveredBlock = null;
+window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+
 window.minecraft2d.createDOMBlock = function(block) {
     let domblock = document.createElement('img');
     domblock.classList.add('block');
     domblock.block = block;
     domblock.src = 'assets/blocks/' + window.minecraft2d.blocktypes[block.blockTypeId].texture;
+    if (block.blockTypeId !== 0) {
+        domblock.addEventListener('mouseover', (ev) => {
+            window.minecraft2d.hoveredBlock = block;
+            domblock.classList.add('blockhovered');
+            domblock.parentNode.classList.add('hasblockhovered');
+            window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        });
+        domblock.addEventListener('mouseout', (ev) => {
+            window.minecraft2d.hoveredBlock = null;
+            domblock.classList.remove('blockhovered');
+            domblock.parentNode.classList.remove('hasblockhovered');
+            window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        });
+    }
+    domblock.addEventListener('dragstart', (ev) => ev.preventDefault());
     return domblock;    
 };
 
@@ -38,6 +56,8 @@ window.minecraft2d.updateBlock = function(x, y, block) {
     if (window.minecraft2d.blockStacks[x].blocks.length <= y) {
         for (let i = window.minecraft2d.blockStacks[x].blocks.length; i < y; i++) {
             let airblock = new Block(0);
+            airblock.x = x;
+            airblock.y = y + i;
             window.minecraft2d.blockStacks[x].blocks.push(airblock);
             window.minecraft2d.blockStacks[x].appendChild(window.minecraft2d.createDOMBlock(airblock));
         }
@@ -47,6 +67,8 @@ window.minecraft2d.updateBlock = function(x, y, block) {
         window.minecraft2d.blockStacks[x].blocks[y] = block;
         window.minecraft2d.blockStacks[x].children[y].replaceWith(window.minecraft2d.createDOMBlock(block));
     }
+    block.x = x;
+    block.y = y;
 };
 
 window.minecraft2d.ensureBlockStack = function(x) {
