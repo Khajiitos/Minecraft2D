@@ -12,10 +12,10 @@ window.minecraft2d.updateHotbarSelectionOnDOM = function() {
 };
 
 window.addEventListener('wheel', (ev) => {
-    if (ev.wheelDelta > 0) {
+    if (ev.wheelDelta < 0) {
         window.minecraft2d.selectedHotbarItem = (window.minecraft2d.selectedHotbarItem + 1) % 9;
     }
-    else if (ev.wheelDelta < 0) {
+    else if (ev.wheelDelta > 0) {
         window.minecraft2d.selectedHotbarItem = window.minecraft2d.selectedHotbarItem - 1;
         if (window.minecraft2d.selectedHotbarItem < 0) {
             window.minecraft2d.selectedHotbarItem = 8;
