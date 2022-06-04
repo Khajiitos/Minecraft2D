@@ -14,6 +14,9 @@ class BlockType {
 
 class Block {
     blockTypeId = 0;
+    domElement = null;
+    x = null;
+    y = null;
 
     constructor(blockTypeId) {
         this.blockTypeId = blockTypeId;
@@ -35,19 +38,20 @@ window.minecraft2d.createDOMBlock = function(block) {
     domblock.src = 'assets/blocks/' + window.minecraft2d.blocktypes[block.blockTypeId].texture;
     if (block.blockTypeId !== 0) {
         domblock.addEventListener('mouseover', (ev) => {
+            window.minecraft2d.stopBreakingHoveredBlock();
             window.minecraft2d.hoveredBlock = block;
             domblock.classList.add('blockhovered');
             domblock.parentNode.classList.add('hasblockhovered');
-            window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
         });
         domblock.addEventListener('mouseout', (ev) => {
+            window.minecraft2d.stopBreakingHoveredBlock();
             window.minecraft2d.hoveredBlock = null;
             domblock.classList.remove('blockhovered');
             domblock.parentNode.classList.remove('hasblockhovered');
-            window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
         });
     }
     domblock.addEventListener('dragstart', (ev) => ev.preventDefault());
+    block.domElement = domblock;
     return domblock;    
 };
 

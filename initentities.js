@@ -61,12 +61,61 @@ class Player extends Entity {
     }
 }
 
+window.minecraft2d.startBreakingHoveredBlock = function() {
+    if (!window.minecraft2d.hoveredBlock) return;
+    if (!window.minecraft2d.hoveredBlock.domElement.parentNode) return;
+    let imgBreak = document.createElement('img');
+    imgBreak.classList.add('block');
+    imgBreak.classList.add('blockbreak');
+    imgBreak.src = 'assets/blocks/destroy_stage_0.png';
+    window.minecraft2d.hoveredBlock.domElement.parentNode.appendChild(imgBreak);
+    imgBreak.style.transform = `translateY(${(window.minecraft2d.hoveredBlock.domElement.parentNode.childElementCount - window.minecraft2d.hoveredBlock.y - 1) * 64}px)`;
+    window.minecraft2d.hoveredBlock.imgBreak = imgBreak;
+    window.minecraft2d.hoveredBlockDestroyProgress = 0.0;
+}
+
+window.minecraft2d.stopBreakingHoveredBlock = function() {
+
+    window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+    if (!window.minecraft2d.hoveredBlock) return;
+    if (!window.minecraft2d.hoveredBlock.imgBreak) return;
+    
+    window.minecraft2d.hoveredBlock.imgBreak.remove();
+    window.minecraft2d.hoveredBlock.imgBreak = undefined;
+}
+
+window.minecraft2d.progressBreakingHoveredBlock = function(by) {
+    window.minecraft2d.hoveredBlockDestroyProgress += by;
+
+    if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.9) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_9.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.8) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_8.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.7) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_7.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.6) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_6.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.5) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_5.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.4) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_4.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.3) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_3.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.2) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_2.png';
+    } else if (window.minecraft2d.hoveredBlockDestroyProgress >= 0.1) {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_1.png';
+    } else {
+        window.minecraft2d.hoveredBlock.imgBreak.src = 'assets/blocks/destroy_stage_0.png';
+    }
+}
+
 window.minecraft2d.handleBreakingBlocks = function() {
     if (!window.minecraft2d.hoveredBlock ||
     window.minecraft2d.hoveredBlock.blockTypeId === 0 ||
     window.minecraft2d.hoveredBlock.blockTypeId === 4 ||
     !window.minecraft2d.leftMousePressed) {
-        window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        window.minecraft2d.stopBreakingHoveredBlock();
         return;
     }
 
@@ -77,17 +126,18 @@ window.minecraft2d.handleBreakingBlocks = function() {
     const eyePosY = window.minecraft2d.player.position.y + window.minecraft2d.player.eyePosYOffset;
 
     if (Math.sqrt(Math.pow(blockCenterX - eyePosX, 2) + Math.pow(blockCenterY - eyePosY, 2)) > 3.0) {
-        window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        window.minecraft2d.stopBreakingHoveredBlock();
         return;
     }
 
     if (window.minecraft2d.hoveredBlockDestroyProgress === -1.0) {
-        window.minecraft2d.hoveredBlockDestroyProgress = 0.0;
+        window.minecraft2d.startBreakingHoveredBlock();
     }
-    window.minecraft2d.hoveredBlockDestroyProgress += 0.06;
+    window.minecraft2d.progressBreakingHoveredBlock(0.06);
     if (window.minecraft2d.hoveredBlockDestroyProgress >= 1.0) {
-        window.minecraft2d.hoveredBlockDestroyProgress = -1.0;
+        window.minecraft2d.stopBreakingHoveredBlock();
         window.minecraft2d.updateBlock(window.minecraft2d.hoveredBlock.x, window.minecraft2d.hoveredBlock.y, new Block(0));
+        window.minecraft2d.hoveredBlock = null;
     }
 }
 
