@@ -73,4 +73,5 @@ function tick() {
     window.minecraft2d.updateDebugScreen();
 }
 
+tick();
 setInterval(tick, 50);
