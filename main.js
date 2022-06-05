@@ -62,14 +62,13 @@ window.minecraft2d.getGameCursorPosition = function() {
 
 function tick() {
 
-    window.minecraft2d.handleWorldGeneration();
-
     for (let entityElement of window.minecraft2d.entitiesDOM) {
         entityElement.entity.tick();
     }
 
     window.minecraft2d.handleDayNightCycle();
     window.minecraft2d.updateCameraOffset();
+    window.minecraft2d.handleWorldGeneration();
     window.minecraft2d.updateDebugScreen();
 }
 
