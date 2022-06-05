@@ -12,11 +12,17 @@
     <script src="worldgenerator.js"></script>
     <script src="cameraoffset.js"></script>
     <script src="hotbar.js"></script>
+    <script src="daynightcycle.js"></script>
     <script src="debugscreen.js"></script>
 
     <style id="cameraoffsets">
         .blockstack, .entity {
             transform: translate(0px, 0px);
+        }
+    </style>
+    <style id="lightcorrections">
+        .block, .entity {
+            filter: brightness(1);
         }
     </style>
 </head>
@@ -40,6 +46,7 @@
         <p id="debugposition" class="pdebug">XY: 0.000 / 0.000</p>
         <p id="debugcursorposition" class="pdebug">Cursor XY: 0.000 / 0.000</p>
         <p id="debugrotation" class="pdebug">Rotation: 0.0</p>
+        <p id="debuggametime" class="pdebug">Game time: 00:00 (Day 1)</p>
     </div>
     <script src="main.js"></script>
 </body>

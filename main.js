@@ -68,6 +68,7 @@ function tick() {
         entityElement.entity.tick();
     }
 
+    window.minecraft2d.handleDayNightCycle();
     window.minecraft2d.updateCameraOffset();
     window.minecraft2d.updateDebugScreen();
 }
