@@ -1,4 +1,4 @@
-let ids = 0;
+let blockTypeIds = 0;
 
 class BlockType {
     name = "";
@@ -6,7 +6,7 @@ class BlockType {
     id = 0;
 
     constructor(name, texture) {
-        this.id = ids++;
+        this.id = blockTypeIds++;
         this.name = name;
         this.texture = texture;
     }

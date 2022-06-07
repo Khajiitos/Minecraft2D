@@ -1,4 +1,4 @@
-let ids = 0;
+let itemTypeIds = 0;
 
 class ItemType {
     name = '';
@@ -10,20 +10,20 @@ class ItemType {
         this.name = name;
         this.texture = texture;
         this.maxCount = maxCount;
-        this.id = ids++;
+        this.id = itemTypeIds++;
     }
 }
 
 class BlockItem extends ItemType {
     constructor() {
-        super.constructor('Block', '', 64);
+        super('Block', '', 64);
     }
 }
 
 class ToolItem extends ItemType {
     toolType = '';
     constructor(name, texture, toolType) {
-        super.constructor(name, texture, 1);
+        super(name, texture, 1);
         this.toolType = toolType;
     }
 }
