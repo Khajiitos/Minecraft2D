@@ -10,6 +10,10 @@ class BlockType {
         this.name = name;
         this.texture = texture;
     }
+
+    createItemStack() {
+        return new window.minecraft2d.BlockItemStack(this, 1);
+    }
 }
 
 class Block {
@@ -20,6 +24,10 @@ class Block {
 
     constructor(blockTypeId) {
         this.blockTypeId = blockTypeId;
+    }
+
+    createItemStack() {
+        return window.minecraft2d.blockTypes[this.blockTypeId].createItemStack();
     }
 }
 
@@ -35,7 +43,7 @@ window.minecraft2d.createDOMBlock = function(block) {
     let domblock = document.createElement('img');
     domblock.classList.add('block');
     domblock.block = block;
-    domblock.src = 'assets/blocks/' + window.minecraft2d.blocktypes[block.blockTypeId].texture;
+    domblock.src = 'assets/blocks/' + window.minecraft2d.blockTypes[block.blockTypeId].texture;
     if (block.blockTypeId !== 0) {
         domblock.addEventListener('mouseover', (ev) => {
             window.minecraft2d.stopBreakingHoveredBlock();
@@ -101,7 +109,7 @@ window.minecraft2d.getBlockAt = (x, y) => {
     return window.minecraft2d.blockStacks[x].blocks[y];
 }
 
-window.minecraft2d.blocktypes = [
+window.minecraft2d.blockTypes = [
     new BlockType('Air', 'air.png'),
     new BlockType('Grass Block', 'grass_block_side.png'),
     new BlockType('Dirt', 'dirt.png'),

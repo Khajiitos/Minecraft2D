@@ -115,6 +115,34 @@ html {
     background-color: rgb(150, 150, 150);
 }
 
+.iteminslot {
+    display: block;
+    width: 95%;
+    height: 95%;
+    image-rendering: pixelated;
+    margin: auto;
+}
+
+.blockiteminslot {
+    display: block;
+    position: relative;
+    width: 90%;
+    height: 90%;
+    image-rendering: pixelated;
+    margin: auto;
+    outline: 1px solid black;
+}
+
+.itemcount {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: white;
+    position: relative;
+    transform: translate(50%, -150%);
+    user-select: none;
+}
+
 .inventoryitemslotcontainer {
     display: flex;
     align-items: center;
