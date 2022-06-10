@@ -163,3 +163,45 @@ window.minecraft2d.createEntity = function(entity) {
     document.getElementById('entities').appendChild(domEntity);
     window.minecraft2d.entitiesDOM.push(domEntity);
 }
+
+window.addEventListener('mousedown', (ev) => {
+    if (ev.button === 2) {
+        const cursorPosX = window.minecraft2d.getGameCursorPosition().x;
+        const cursorPosY = window.minecraft2d.getGameCursorPosition().y;
+        const eyePosX = window.minecraft2d.player.position.x;
+        const eyePosY = window.minecraft2d.player.position.y + window.minecraft2d.player.eyePosYOffset;
+
+        if (Math.sqrt(Math.pow(cursorPosX - eyePosX, 2) + Math.pow(cursorPosY - eyePosY, 2)) > 3.0) {
+            return;
+        }
+
+        const hotbarItem = window.minecraft2d.inventory[window.minecraft2d.selectedHotbarItem];
+
+        if (!hotbarItem || !(hotbarItem instanceof BlockItemStack)) {
+            return;
+        }
+
+        const blockX = Math.floor(cursorPosX);
+        const blockY = Math.floor(cursorPosY);
+
+        const selectedBlock = window.minecraft2d.getBlockAt(blockX, blockY);
+
+        if (selectedBlock && selectedBlock.blockTypeId !== 0) {
+            return;
+        }
+
+        if (window.minecraft2d.isAir(blockX - 1, blockY) &&
+            window.minecraft2d.isAir(blockX, blockY + 1) &&
+            window.minecraft2d.isAir(blockX + 1, blockY) &&
+            window.minecraft2d.isAir(blockX, blockY-1)) {
+            return;
+        }
+
+        window.minecraft2d.updateBlock(blockX, blockY, new Block(hotbarItem.blockTypeId));
+        hotbarItem.count--;
+        if (hotbarItem.count <= 0) {
+            window.minecraft2d.inventory[window.minecraft2d.selectedHotbarItem] = null;
+        }
+        window.minecraft2d.updateInventory();
+    }
+});

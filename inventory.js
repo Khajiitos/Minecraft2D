@@ -9,11 +9,18 @@ window.minecraft2d.toggleInventory = function() {
 window.minecraft2d.updateInventory = function() {
     for (let i = 0; i < 36; i++) {
         const element = document.getElementById(`inventoryitem${i}`);
+        const hotbarElement = i < 9 ? document.getElementById(`hotbaritem${i}`) : null;
+
         if (!element) {
             console.error('Inventory gone :(');
             return;
         }
         element.innerHTML = '';
+
+        if (hotbarElement) {
+            hotbarElement.innerHTML = '';
+        }
+
         const inventoryItem = window.minecraft2d.inventory[i];
         if (inventoryItem !== null) {
             let imgElement = document.createElement('img');
@@ -24,6 +31,10 @@ window.minecraft2d.updateInventory = function() {
             itemCountElement.innerText = inventoryItem.count === 1 ? '' : inventoryItem.count;
             element.appendChild(imgElement);
             element.appendChild(itemCountElement);
+            if (hotbarElement) {
+                hotbarElement.appendChild(imgElement);
+                hotbarElement.appendChild(itemCountElement);
+            }
         }
     }
 }

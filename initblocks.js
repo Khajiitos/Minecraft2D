@@ -98,7 +98,7 @@ window.minecraft2d.ensureBlockStack = function(x) {
     }
 };
 
-window.minecraft2d.getBlockAt = (x, y) => {
+window.minecraft2d.getBlockAt = function(x, y) {
 
     if (typeof window.minecraft2d.blockStacks[x] === 'undefined')
         return null;
@@ -107,6 +107,11 @@ window.minecraft2d.getBlockAt = (x, y) => {
         return null;
 
     return window.minecraft2d.blockStacks[x].blocks[y];
+};
+
+window.minecraft2d.isAir = function(x, y) {
+    const block = window.minecraft2d.getBlockAt(x, y);
+    return block === null || block.blockTypeId === 0; 
 }
 
 window.minecraft2d.blockTypes = [
