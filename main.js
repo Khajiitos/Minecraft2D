@@ -56,7 +56,7 @@ window.addEventListener('contextmenu', (ev) => ev.preventDefault());
 window.minecraft2d.getGameCursorPosition = function() {
     return {
         x: (window.minecraft2d.mousePos.x - window.minecraft2d.cameraOffset.x) / 64.0,
-        y: (window.innerHeight - window.minecraft2d.mousePos.y - window.minecraft2d.cameraOffset.y) / 64.0
+        y: (window.innerHeight - window.minecraft2d.mousePos.y + window.minecraft2d.cameraOffset.y) / 64.0
     };
 };
 

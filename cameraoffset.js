@@ -7,7 +7,7 @@ window.minecraft2d.updateCameraOffset = function() {
     const style = document.getElementById('cameraoffsets');
 
     window.minecraft2d.cameraOffset.x = -(window.minecraft2d.player.position.x * 64) + (window.innerWidth / 2);
-    window.minecraft2d.cameraOffset.y = 0; // Y offset will be added later
+    window.minecraft2d.cameraOffset.y = Math.max(0, (window.minecraft2d.player.position.y * 64) - (window.innerHeight / 2))
     style.innerHTML = `
     .blockstack, .entity {
         transform: translate(${window.minecraft2d.cameraOffset.x}px, ${window.minecraft2d.cameraOffset.y}px);

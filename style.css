@@ -51,6 +51,8 @@ html {
     margin: 0px;
     padding: 3px;
     background-color: rgb(50, 50, 50, 0.3);
+    user-select: none;
+    z-index: 100;
 }
 
 #hotbar {
