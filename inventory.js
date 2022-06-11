@@ -31,9 +31,10 @@ window.minecraft2d.updateInventory = function() {
             itemCountElement.innerText = inventoryItem.count === 1 ? '' : inventoryItem.count;
             element.appendChild(imgElement);
             element.appendChild(itemCountElement);
+            
             if (hotbarElement) {
-                hotbarElement.appendChild(imgElement);
-                hotbarElement.appendChild(itemCountElement);
+                hotbarElement.appendChild(imgElement.cloneNode(true));
+                hotbarElement.appendChild(itemCountElement.cloneNode(true));
             }
         }
     }
