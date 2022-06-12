@@ -62,8 +62,8 @@ window.minecraft2d.getGameCursorPosition = function() {
 
 function tick() {
 
-    for (let entityElement of window.minecraft2d.entitiesDOM) {
-        entityElement.entity.tick();
+    for (let entityElement of window.minecraft2d.entities) {
+        entityElement.tick();
     }
 
     window.minecraft2d.handleDayNightCycle();

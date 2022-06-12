@@ -41,7 +41,6 @@ class Player extends Entity {
     }
 
     tick() {
-        super.tick();
         const eyePosX = this.position.x;
         const eyePosY = this.position.y + this.eyePosYOffset;
         const mouseX = window.minecraft2d.getGameCursorPosition().x;
@@ -49,15 +48,21 @@ class Player extends Entity {
         this.rotation = Math.atan2(mouseY - eyePosY, mouseX - eyePosX) * 180.0 / Math.PI;
 
         if (window.minecraft2d.isKeyPressed('d')) {
-            window.minecraft2d.player.position.x += 0.175;
+            if (window.minecraft2d.getBlocksIn(this.position.x + (this.boundingBoxWidth / 2.0), this.position.y, this.position.x + (this.boundingBoxWidth / 2.0) + 0.175, this.position.y + this.boundingBoxHeight).length === 0) {
+                window.minecraft2d.player.position.x += 0.175;
+            }
         }
         if (window.minecraft2d.isKeyPressed('a')) {
-            window.minecraft2d.player.position.x -= 0.175;
+            if (window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0) - 0.175, this.position.y, this.position.x - (this.boundingBoxWidth / 2.0), this.position.y + this.boundingBoxHeight).length === 0) {
+                window.minecraft2d.player.position.x -= 0.175;
+            }
         }
         if (window.minecraft2d.isKeyPressed(' ')) {
             window.minecraft2d.player.position.y += 0.3;
         }
         window.minecraft2d.handleBreakingBlocks();
+
+        super.tick();
     }
 }
 
@@ -145,7 +150,7 @@ window.minecraft2d.handleBreakingBlocks = function() {
 window.minecraft2d.Entity = Entity;
 window.minecraft2d.Player = Player;
 
-window.minecraft2d.entitiesDOM = [];
+window.minecraft2d.entities = [];
 
 window.minecraft2d.createDOMEntity = function(entity) {
     let entityimg = document.createElement('img');
@@ -161,7 +166,22 @@ window.minecraft2d.createDOMEntity = function(entity) {
 window.minecraft2d.createEntity = function(entity) {
     let domEntity = window.minecraft2d.createDOMEntity(entity);
     document.getElementById('entities').appendChild(domEntity);
-    window.minecraft2d.entitiesDOM.push(domEntity);
+    window.minecraft2d.entities.push(entity);
+}
+
+window.minecraft2d.getEntitiesIn = function(x0, y0, x1, y1) {
+    const entities = [];
+    for (const entity of window.minecraft2d.entities) {
+        const x0_ent = entity.position.x - (entity.boundingBoxWidth / 2.0);
+        const y0_ent = entity.position.y + entity.boundingBoxHeight;
+        const x1_ent = entity.position.x + (entity.boundingBoxWidth / 2.0);
+        const y1_ent = entity.position.y;
+
+        if (x1 >= x0_ent && x0 <= x1_ent && y1_ent <= y0 && y0_ent >= y1) {
+            entities.push(entity);
+        }
+    }
+    return entities;
 }
 
 window.addEventListener('mousedown', (ev) => {
@@ -194,6 +214,10 @@ window.addEventListener('mousedown', (ev) => {
             window.minecraft2d.isAir(blockX, blockY + 1) &&
             window.minecraft2d.isAir(blockX + 1, blockY) &&
             window.minecraft2d.isAir(blockX, blockY-1)) {
+            return;
+        }
+
+        if (window.minecraft2d.getEntitiesIn(blockX, blockY, blockX + 1, blockY + 1).length !== 0) {
             return;
         }
 

@@ -111,7 +111,24 @@ window.minecraft2d.getBlockAt = function(x, y) {
 
 window.minecraft2d.isAir = function(x, y) {
     const block = window.minecraft2d.getBlockAt(x, y);
+    return block === null || block.blockTypeId === 0;
+}
+
+window.minecraft2d.isBlockAir = function(block) {
     return block === null || block.blockTypeId === 0; 
+}
+
+window.minecraft2d.getBlocksIn = function(x0, y0, x1, y1) {
+    const blocks = [];
+    for (let x = Math.floor(x0); x < Math.ceil(x1); x++) {
+        for (let y = Math.floor(y0); y < Math.ceil(y1); y++) {
+            const block = window.minecraft2d.getBlockAt(x, y);
+            if (!window.minecraft2d.isBlockAir(block)) {
+                blocks.push(block);
+            }
+        }
+    }
+    return blocks;
 }
 
 window.minecraft2d.blockTypes = [
