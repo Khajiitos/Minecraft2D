@@ -31,19 +31,7 @@ class Entity {
                 this.position.y -= distanceToBlock;
             }
         }
-
-        /*
-        // Gravity, also makes sure to fall right on the block and not float a little bit above it
-        let blockUnderFeetLeft = window.minecraft2d.getBlockAt(Math.floor(this.position.x - (this.boundingBoxWidth / 2.0)), Math.floor(this.position.y));
-        let blockUnderFeetRight = window.minecraft2d.getBlockAt(Math.floor(this.position.x + (this.boundingBoxWidth / 2.0)), Math.floor(this.position.y));
-        if ((blockUnderFeetLeft === null || blockUnderFeetLeft.blockTypeId === 0) && (blockUnderFeetRight === null || blockUnderFeetRight.blockTypeId === 0)) {
-            this.position.y -= 0.15;
-            let blockUnderFeetLeftNow = window.minecraft2d.getBlockAt(Math.floor(this.position.x - (this.boundingBoxWidth / 2.0)), Math.floor(this.position.y));
-            let blockUnderFeetRightNow = window.minecraft2d.getBlockAt(Math.floor(this.position.x + (this.boundingBoxWidth / 2.0)), Math.floor(this.position.y));
-            if ((blockUnderFeetLeftNow !== null && blockUnderFeetLeftNow.blockTypeId !== 0) || (blockUnderFeetRightNow !== null && blockUnderFeetRightNow.blockTypeId !== 0)) {
-                this.position.y = Math.ceil(this.position.y);
-            }
-        }*/
+        
         this.domElement.style.left = (this.position.x - (this.boundingBoxWidth / 2.0)) * 64 + 'px';
         this.domElement.style.bottom = this.position.y * 64 + 'px';
     }
