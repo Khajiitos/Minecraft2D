@@ -11,8 +11,28 @@ class Entity {
     eyePosYOffset = 0.8;
     texture = '';
     domElement = null;
+    ticksInAir = 0;
+    jumped = false;
 
     tick() {
+        if (window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0), this.position.y - 0.05, this.position.x + (this.boundingBoxWidth / 2.0), this.position.y).length === 0) {
+            this.ticksInAir++;
+        } else {
+            this.ticksInAir = 0;
+            this.jumped = false;
+        }
+
+        if (this.ticksInAir > 0) {
+            const fallSpeed = Math.pow(Math.min(this.ticksInAir / 20), 2) + 0.15;
+            if (window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0), this.position.y - fallSpeed, this.position.x + (this.boundingBoxWidth / 2.0), this.position.y).length === 0) {
+                this.position.y -= fallSpeed;
+            } else {
+                const distanceToBlock = this.position.y - Math.floor(this.position.y);
+                this.position.y -= distanceToBlock;
+            }
+        }
+
+        /*
         // Gravity, also makes sure to fall right on the block and not float a little bit above it
         let blockUnderFeetLeft = window.minecraft2d.getBlockAt(Math.floor(this.position.x - (this.boundingBoxWidth / 2.0)), Math.floor(this.position.y));
         let blockUnderFeetRight = window.minecraft2d.getBlockAt(Math.floor(this.position.x + (this.boundingBoxWidth / 2.0)), Math.floor(this.position.y));
@@ -23,7 +43,7 @@ class Entity {
             if ((blockUnderFeetLeftNow !== null && blockUnderFeetLeftNow.blockTypeId !== 0) || (blockUnderFeetRightNow !== null && blockUnderFeetRightNow.blockTypeId !== 0)) {
                 this.position.y = Math.ceil(this.position.y);
             }
-        }
+        }*/
         this.domElement.style.left = (this.position.x - (this.boundingBoxWidth / 2.0)) * 64 + 'px';
         this.domElement.style.bottom = this.position.y * 64 + 'px';
     }
@@ -34,8 +54,8 @@ class Player extends Entity {
     
     constructor() {
         super();
-        this.boundingBoxHeight = 1.85;
-        this.boundingBoxWidth = 0.925;
+        this.boundingBoxHeight = 1.75;
+        this.boundingBoxWidth = 0.9;
         this.eyePosYOffset = 1.55;
         this.texture = 'player.png';
     }
@@ -46,25 +66,40 @@ class Player extends Entity {
         const mouseX = window.minecraft2d.getGameCursorPosition().x;
         const mouseY = window.minecraft2d.getGameCursorPosition().y;
         this.rotation = Math.atan2(mouseY - eyePosY, mouseX - eyePosX) * 180.0 / Math.PI;
-
+        const horizontalSpeed = 0.17 + (Math.random() * 0.01);
         if (window.minecraft2d.isKeyPressed('d')) {
-            if (window.minecraft2d.getBlocksIn(this.position.x + (this.boundingBoxWidth / 2.0), this.position.y, this.position.x + (this.boundingBoxWidth / 2.0) + 0.175, this.position.y + this.boundingBoxHeight).length === 0) {
-                window.minecraft2d.player.position.x += 0.175;
+            if (window.minecraft2d.getBlocksIn(this.position.x + (this.boundingBoxWidth / 2.0), this.position.y, this.position.x + (this.boundingBoxWidth / 2.0) + horizontalSpeed, this.position.y + this.boundingBoxHeight).length === 0) {
+                window.minecraft2d.player.position.x += horizontalSpeed;
             } else {
                 const distanceToBlock = Math.ceil(this.position.x + (this.boundingBoxWidth / 2.0)) - (this.position.x + (this.boundingBoxWidth / 2.0));
                 window.minecraft2d.player.position.x += distanceToBlock;
             }
         }
         if (window.minecraft2d.isKeyPressed('a')) {
-            if (window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0) - 0.175, this.position.y, this.position.x - (this.boundingBoxWidth / 2.0), this.position.y + this.boundingBoxHeight).length === 0) {
-                window.minecraft2d.player.position.x -= 0.175;
+            if (window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0) - horizontalSpeed, this.position.y, this.position.x - (this.boundingBoxWidth / 2.0), this.position.y + this.boundingBoxHeight).length === 0) {
+                window.minecraft2d.player.position.x -= horizontalSpeed;
             } else {
                 const distanceToBlock = Math.floor(this.position.x - (this.boundingBoxWidth / 2.0)) - (this.position.x - (this.boundingBoxWidth / 2.0));
                 window.minecraft2d.player.position.x += distanceToBlock;
             }
         }
         if (window.minecraft2d.isKeyPressed(' ')) {
-            window.minecraft2d.player.position.y += 0.3;
+            if (!this.jumped) {
+                const blocks = window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0), this.position.y + this.boundingBoxHeight, this.position.x + (this.boundingBoxWidth / 2.0), this.position.y + this.boundingBoxHeight + 1.35);
+                if (blocks.length === 0) {
+                    window.minecraft2d.player.position.y += 1.35;
+                } else {
+                    let lowestY = blocks[0].y;
+                    for (const block of blocks) {
+                        if (block.y < lowestY) {
+                            lowestY = block.y;
+                        }
+                    }
+                    const distanceToBlock = lowestY - (this.position.y + this.boundingBoxHeight);
+                    window.minecraft2d.player.position.y += distanceToBlock;
+                }
+                this.jumped = true;
+            }
         }
         window.minecraft2d.handleBreakingBlocks();
 
@@ -179,11 +214,11 @@ window.minecraft2d.getEntitiesIn = function(x0, y0, x1, y1) {
     const entities = [];
     for (const entity of window.minecraft2d.entities) {
         const x0_ent = entity.position.x - (entity.boundingBoxWidth / 2.0);
-        const y0_ent = entity.position.y + entity.boundingBoxHeight;
+        const y0_ent = entity.position.y;
         const x1_ent = entity.position.x + (entity.boundingBoxWidth / 2.0);
-        const y1_ent = entity.position.y;
+        const y1_ent = entity.position.y + entity.boundingBoxHeight;
 
-        if (x1 >= x0_ent && x0 <= x1_ent && y1_ent <= y0 && y0_ent >= y1) {
+        if (x1 >= x0_ent && x0 <= x1_ent && y1_ent >= y0 && y0_ent <= y1) {
             entities.push(entity);
         }
     }

@@ -16,4 +16,5 @@ window.minecraft2d.updateDebugScreen = function() {
     if (minute.length === 1) minute = '0' + minute;
     let day = 1 + Math.floor(window.minecraft2d.gameTime / 24000);
     document.getElementById('debuggametime').innerText = `Game time: ${hour}:${minute} (Day ${day})`;
+    document.getElementById('debugticksinair').innerText = `Ticks in air: ${window.minecraft2d.player.ticksInAir}`;
 };
