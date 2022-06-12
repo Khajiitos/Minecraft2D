@@ -52,6 +52,10 @@ class ItemStack {
     getMaxCount() {
         return window.minecraft2d.itemTypes[this.itemTypeId].maxCount;
     }
+
+    getName() {
+        return window.minecraft2d.itemTypes[this.itemTypeId].name;
+    }
 }
 
 class BlockItemStack extends ItemStack {
@@ -76,6 +80,10 @@ class BlockItemStack extends ItemStack {
 
     getMaxCount() {
         return window.minecraft2d.itemTypes[0].maxCount;
+    }
+
+    getName() {
+        return window.minecraft2d.blockTypes[this.blockTypeId].name;
     }
 }
 

@@ -118,6 +118,10 @@ html {
     background-color: rgb(150, 150, 150);
 }
 
+.inventoryitemslot:hover {
+    filter: brightness(1.15);
+}
+
 .iteminslot {
     display: block;
     width: 95%;
@@ -157,4 +161,16 @@ html {
     margin-top: 25px;
     align-items: center;
     justify-content: center;
+}
+
+#inventorytooltip {
+    position: absolute;
+    width: auto;
+    height: 20px;
+    background-color: darkblue;
+    border: 2px solid blue;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    z-index: 3;
 }

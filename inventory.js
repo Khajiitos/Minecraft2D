@@ -2,8 +2,28 @@ window.minecraft2d.inventory = new Array(36).fill(null);
 window.minecraft2d.inventoryOpen = false;
 
 window.minecraft2d.toggleInventory = function() {
+    window.minecraft2d.hideInventoryTooltip();
     window.minecraft2d.inventoryOpen = !window.minecraft2d.inventoryOpen;
     document.getElementById('inventory').style.display = window.minecraft2d.inventoryOpen ? 'block' : 'none';
+}
+
+window.minecraft2d.showInventoryTooltip = function(toolTip) {
+    const element = document.getElementById('inventorytooltip');
+    element.style.display = 'block';
+    element.innerText = toolTip;
+    window.minecraft2d.updateInventoryTooltipPosition();
+};
+
+window.minecraft2d.hideInventoryTooltip = function() {
+    const element = document.getElementById('inventorytooltip');
+    element.style.display = 'none';
+    element.innerText = '';
+}
+
+window.minecraft2d.updateInventoryTooltipPosition = function(x ,y) {
+    const element = document.getElementById('inventorytooltip');
+    element.style.left = x + 3 + 'px';
+    element.style.top = y + 3 + 'px';
 }
 
 window.minecraft2d.updateInventory = function() {
@@ -26,6 +46,20 @@ window.minecraft2d.updateInventory = function() {
             let imgElement = document.createElement('img');
             imgElement.classList.add(inventoryItem instanceof BlockItemStack ? 'blockiteminslot' : 'iteminslot');
             imgElement.src = inventoryItem.getFullTexture();
+            imgElement.setAttribute('itemname', inventoryItem.getName());
+
+            imgElement.addEventListener('mouseover', (ev) => {
+                window.minecraft2d.showInventoryTooltip(imgElement.getAttribute('itemname'));
+            });
+
+            imgElement.addEventListener('mouseout', (ev) => {
+                window.minecraft2d.hideInventoryTooltip();
+            });
+
+            imgElement.addEventListener('mousemove', (ev) => {
+                window.minecraft2d.updateInventoryTooltipPosition(ev.x, ev.y);
+            });
+
             let itemCountElement = document.createElement('p');
             itemCountElement.classList.add('itemcount');
             itemCountElement.innerText = inventoryItem.count === 1 ? '' : inventoryItem.count;
