@@ -173,4 +173,5 @@ html {
     border-radius: 5px;
     color: white;
     z-index: 3;
+    user-select: none;
 }
