@@ -50,11 +50,17 @@ class Player extends Entity {
         if (window.minecraft2d.isKeyPressed('d')) {
             if (window.minecraft2d.getBlocksIn(this.position.x + (this.boundingBoxWidth / 2.0), this.position.y, this.position.x + (this.boundingBoxWidth / 2.0) + 0.175, this.position.y + this.boundingBoxHeight).length === 0) {
                 window.minecraft2d.player.position.x += 0.175;
+            } else {
+                const distanceToBlock = Math.ceil(this.position.x + (this.boundingBoxWidth / 2.0)) - (this.position.x + (this.boundingBoxWidth / 2.0));
+                window.minecraft2d.player.position.x += distanceToBlock;
             }
         }
         if (window.minecraft2d.isKeyPressed('a')) {
             if (window.minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0) - 0.175, this.position.y, this.position.x - (this.boundingBoxWidth / 2.0), this.position.y + this.boundingBoxHeight).length === 0) {
                 window.minecraft2d.player.position.x -= 0.175;
+            } else {
+                const distanceToBlock = Math.floor(this.position.x - (this.boundingBoxWidth / 2.0)) - (this.position.x - (this.boundingBoxWidth / 2.0));
+                window.minecraft2d.player.position.x += distanceToBlock;
             }
         }
         if (window.minecraft2d.isKeyPressed(' ')) {
