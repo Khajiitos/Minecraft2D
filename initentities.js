@@ -172,6 +172,7 @@ window.minecraft2d.handleBreakingBlocks = function() {
         window.minecraft2d.stopBreakingHoveredBlock();
         window.minecraft2d.updateBlock(window.minecraft2d.hoveredBlock.x, window.minecraft2d.hoveredBlock.y, new Block(0));
         window.minecraft2d.addItem(window.minecraft2d.hoveredBlock.createItemStack());
+        window.minecraft2d.blockStacks[window.minecraft2d.hoveredBlock.x].classList.remove('hasblockhovered');
         window.minecraft2d.hoveredBlock = null;
     }
 }
