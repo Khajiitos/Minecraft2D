@@ -207,7 +207,7 @@ window.minecraft2d.getEntitiesIn = function(x0, y0, x1, y1) {
         const x1_ent = entity.position.x + (entity.boundingBoxWidth / 2.0);
         const y1_ent = entity.position.y + entity.boundingBoxHeight;
 
-        if (x1 >= x0_ent && x0 <= x1_ent && y1_ent >= y0 && y0_ent <= y1) {
+        if (x1 > x0_ent && x0 < x1_ent && y1_ent > y0 && y0_ent < y1) {
             entities.push(entity);
         }
     }
