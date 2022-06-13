@@ -175,3 +175,11 @@ html {
     z-index: 3;
     user-select: none;
 }
+
+#inventoryitemoncursor {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+    z-index: 3;
+    opacity: 0.75;
+}

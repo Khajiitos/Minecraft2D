@@ -12,7 +12,7 @@ window.minecraft2d.showInventoryTooltip = function(toolTip) {
     const element = document.getElementById('inventorytooltip');
     element.style.display = 'block';
     element.innerText = toolTip;
-    window.minecraft2d.updateInventoryTooltipPosition();
+    window.minecraft2d.updateInventoryTooltipPosition(window.minecraft2d.mousePos.x, window.minecraft2d.mousePos.y);
 };
 
 window.minecraft2d.hideInventoryTooltip = function() {
@@ -23,6 +23,36 @@ window.minecraft2d.hideInventoryTooltip = function() {
 
 window.minecraft2d.updateInventoryTooltipPosition = function(x ,y) {
     const element = document.getElementById('inventorytooltip');
+    element.style.left = x + 3 + 'px';
+    element.style.top = y + 3 + 'px';
+}
+
+window.minecraft2d.showItemOnCursor = function(itemStack) {
+    const element = document.getElementById('inventoryitemoncursor');
+    element.style.display = 'block';
+    element.innerText = '';
+
+    let imgElement = document.createElement('img');
+    imgElement.classList.add(itemStack instanceof BlockItemStack ? 'blockiteminslot' : 'iteminslot');
+    imgElement.src = itemStack.getFullTexture();
+
+    let itemCountElement = document.createElement('p');
+    itemCountElement.classList.add('itemcount');
+    itemCountElement.innerText = itemStack.count === 1 ? '' : itemStack.count;
+    element.appendChild(imgElement);
+    element.appendChild(itemCountElement);
+
+    window.minecraft2d.updateItemOnCursorPosition(window.minecraft2d.mousePos.x, window.minecraft2d.mousePos.y);
+}
+
+window.minecraft2d.hideItemOnCursor = function() {
+    const element = document.getElementById('inventoryitemoncursor');
+    element.style.display = 'none';
+    element.innerHTML = '';
+}
+
+window.minecraft2d.updateItemOnCursorPosition = function(x, y) {
+    const element = document.getElementById('inventoryitemoncursor');
     element.style.left = x + 3 + 'px';
     element.style.top = y + 3 + 'px';
 }
@@ -117,10 +147,21 @@ window.minecraft2d.addItem = function(itemStack) {
 
 window.addEventListener('keydown', (ev) => {
     if (ev.key.toLowerCase() === 'e') {
+        if (window.minecraft2d.itemStackOnCursor !== null) {
+            window.minecraft2d.addItem(window.minecraft2d.itemStackOnCursor);
+            window.minecraft2d.itemStackOnCursor = null;
+        }
         window.minecraft2d.toggleInventory();
         window.minecraft2d.updateInventory();
+        window.minecraft2d.hideItemOnCursor();
     }
 });
+
+window.addEventListener('mousemove', (ev) => {
+    if (window.minecraft2d.itemStackOnCursor !== null) {
+        window.minecraft2d.updateItemOnCursorPosition(ev.x, ev.y);
+    }
+})
 
 window.addEventListener('load', (ev) => {
     for (let i = 0; i < 36; i++) {
@@ -130,6 +171,11 @@ window.addEventListener('load', (ev) => {
             const tmp = window.minecraft2d.itemStackOnCursor;
             window.minecraft2d.itemStackOnCursor = window.minecraft2d.inventory[i];
             window.minecraft2d.inventory[i] = tmp;
+            if (window.minecraft2d.itemStackOnCursor !== null) {
+                window.minecraft2d.showItemOnCursor(window.minecraft2d.itemStackOnCursor);
+            } else {
+                window.minecraft2d.hideItemOnCursor();
+            }
             window.minecraft2d.updateInventory();
             window.minecraft2d.hideInventoryTooltip();
         });
