@@ -101,7 +101,7 @@ html {
     display: flex;
     background-color: rgb(125, 125, 125);
     margin: auto;
-    width: 472px;
+    width: 640px;
     height: 300px;
     top: 50%;
     left: 50%;
@@ -109,6 +109,43 @@ html {
     z-index: 2;
     cursor: default;
     padding: 20px;
+}
+
+#inventoryitems {
+    width: 472px;
+}
+
+#inventorycrafting {
+    display: flex;
+    flex-direction: column;
+    width: 192px;
+}
+
+#inventorycraftingresultcontainer {
+    display: flex;
+    align-items: center;
+    height: 96px;
+}
+
+#inventorycraftinginputfields {
+    height: 96px;
+}
+
+#inventorycraftingfields {
+    display: flex;
+    justify-content: space-between;
+}
+
+.craftingtext {
+    display: flex;
+    color: white;
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    vertical-align:middle;
+    margin: 0;
+    width: 96px;
+    height: 48px;
 }
 
 .inventoryitemslot {

@@ -15,6 +15,7 @@
     <script src="cameraoffset.js"></script>
     <script src="inventory.js"></script>
     <script src="hotbar.js"></script>
+    <script src="crafting.js"></script>
     <script src="daynightcycle.js"></script>
     <script src="debugscreen.js"></script>
 
@@ -45,49 +46,69 @@
         <div id="hotbaritem8" class="hotbaritem"></div>
     </div>
     <div id="inventory" style="display: none;">
-        <div class="inventoryitemslotcontainer">
-            <div id="inventoryitem9" class="inventoryitemslot"></div>
-            <div id="inventoryitem10" class="inventoryitemslot"></div>
-            <div id="inventoryitem11" class="inventoryitemslot"></div>
-            <div id="inventoryitem12" class="inventoryitemslot"></div>
-            <div id="inventoryitem13" class="inventoryitemslot"></div>
-            <div id="inventoryitem14" class="inventoryitemslot"></div>
-            <div id="inventoryitem15" class="inventoryitemslot"></div>
-            <div id="inventoryitem16" class="inventoryitemslot"></div>
-            <div id="inventoryitem17" class="inventoryitemslot"></div>
+        <div id="inventoryitems">
+            <div class="inventoryitemslotcontainer">
+                <div id="inventoryitem9" class="inventoryitemslot"></div>
+                <div id="inventoryitem10" class="inventoryitemslot"></div>
+                <div id="inventoryitem11" class="inventoryitemslot"></div>
+                <div id="inventoryitem12" class="inventoryitemslot"></div>
+                <div id="inventoryitem13" class="inventoryitemslot"></div>
+                <div id="inventoryitem14" class="inventoryitemslot"></div>
+                <div id="inventoryitem15" class="inventoryitemslot"></div>
+                <div id="inventoryitem16" class="inventoryitemslot"></div>
+                <div id="inventoryitem17" class="inventoryitemslot"></div>
+            </div>
+            <div class="inventoryitemslotcontainer">
+                <div id="inventoryitem18" class="inventoryitemslot"></div>
+                <div id="inventoryitem19" class="inventoryitemslot"></div>
+                <div id="inventoryitem20" class="inventoryitemslot"></div>
+                <div id="inventoryitem21" class="inventoryitemslot"></div>
+                <div id="inventoryitem22" class="inventoryitemslot"></div>
+                <div id="inventoryitem23" class="inventoryitemslot"></div>
+                <div id="inventoryitem24" class="inventoryitemslot"></div>
+                <div id="inventoryitem25" class="inventoryitemslot"></div>
+                <div id="inventoryitem26" class="inventoryitemslot"></div>
+            </div>
+            <div class="inventoryitemslotcontainer">
+                <div id="inventoryitem27" class="inventoryitemslot"></div>
+                <div id="inventoryitem28" class="inventoryitemslot"></div>
+                <div id="inventoryitem29" class="inventoryitemslot"></div>
+                <div id="inventoryitem30" class="inventoryitemslot"></div>
+                <div id="inventoryitem31" class="inventoryitemslot"></div>
+                <div id="inventoryitem32" class="inventoryitemslot"></div>
+                <div id="inventoryitem33" class="inventoryitemslot"></div>
+                <div id="inventoryitem34" class="inventoryitemslot"></div>
+                <div id="inventoryitem35" class="inventoryitemslot"></div>
+            </div>
+            <div class="inventoryitemslotcontainerhotbar">
+                <div id="inventoryitem0" class="inventoryitemslot"></div>
+                <div id="inventoryitem1" class="inventoryitemslot"></div>
+                <div id="inventoryitem2" class="inventoryitemslot"></div>
+                <div id="inventoryitem3" class="inventoryitemslot"></div>
+                <div id="inventoryitem4" class="inventoryitemslot"></div>
+                <div id="inventoryitem5" class="inventoryitemslot"></div>
+                <div id="inventoryitem6" class="inventoryitemslot"></div>
+                <div id="inventoryitem7" class="inventoryitemslot"></div>
+                <div id="inventoryitem8" class="inventoryitemslot"></div>
+            </div>
         </div>
-        <div class="inventoryitemslotcontainer">
-            <div id="inventoryitem18" class="inventoryitemslot"></div>
-            <div id="inventoryitem19" class="inventoryitemslot"></div>
-            <div id="inventoryitem20" class="inventoryitemslot"></div>
-            <div id="inventoryitem21" class="inventoryitemslot"></div>
-            <div id="inventoryitem22" class="inventoryitemslot"></div>
-            <div id="inventoryitem23" class="inventoryitemslot"></div>
-            <div id="inventoryitem24" class="inventoryitemslot"></div>
-            <div id="inventoryitem25" class="inventoryitemslot"></div>
-            <div id="inventoryitem26" class="inventoryitemslot"></div>
-        </div>
-        <div class="inventoryitemslotcontainer">
-            <div id="inventoryitem27" class="inventoryitemslot"></div>
-            <div id="inventoryitem28" class="inventoryitemslot"></div>
-            <div id="inventoryitem29" class="inventoryitemslot"></div>
-            <div id="inventoryitem30" class="inventoryitemslot"></div>
-            <div id="inventoryitem31" class="inventoryitemslot"></div>
-            <div id="inventoryitem32" class="inventoryitemslot"></div>
-            <div id="inventoryitem33" class="inventoryitemslot"></div>
-            <div id="inventoryitem34" class="inventoryitemslot"></div>
-            <div id="inventoryitem35" class="inventoryitemslot"></div>
-        </div>
-        <div class="inventoryitemslotcontainerhotbar">
-            <div id="inventoryitem0" class="inventoryitemslot"></div>
-            <div id="inventoryitem1" class="inventoryitemslot"></div>
-            <div id="inventoryitem2" class="inventoryitemslot"></div>
-            <div id="inventoryitem3" class="inventoryitemslot"></div>
-            <div id="inventoryitem4" class="inventoryitemslot"></div>
-            <div id="inventoryitem5" class="inventoryitemslot"></div>
-            <div id="inventoryitem6" class="inventoryitemslot"></div>
-            <div id="inventoryitem7" class="inventoryitemslot"></div>
-            <div id="inventoryitem8" class="inventoryitemslot"></div>
+        <div id="inventorycrafting">
+            <p class="craftingtext">Crafting</p>
+            <div id="inventorycraftingfields">
+                <div id="inventorycraftinginputfields">
+                    <div class="inventoryitemslotcontainer" style="width: 96px;">
+                        <div id="inventorycraftingitem0" class="inventoryitemslot"></div>
+                        <div id="inventorycraftingitem1" class="inventoryitemslot"></div>
+                    </div>
+                    <div class="inventoryitemslotcontainer" style="width: 96px;">
+                        <div id="inventorycraftingitem2" class="inventoryitemslot"></div>
+                        <div id="inventorycraftingitem3" class="inventoryitemslot"></div>
+                    </div>
+                </div>
+                <div id="inventorycraftingresultcontainer">
+                    <div id="inventorycraftingresult" class="inventoryitemslot"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div id="inventorytooltip" style="display: none;"></div>

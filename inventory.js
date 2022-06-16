@@ -5,7 +5,7 @@ window.minecraft2d.itemStackOnCursor = null;
 window.minecraft2d.toggleInventory = function() {
     window.minecraft2d.hideInventoryTooltip();
     window.minecraft2d.inventoryOpen = !window.minecraft2d.inventoryOpen;
-    document.getElementById('inventory').style.display = window.minecraft2d.inventoryOpen ? 'block' : 'none';
+    document.getElementById('inventory').style.display = window.minecraft2d.inventoryOpen ? 'flex' : 'none';
 }
 
 window.minecraft2d.showInventoryTooltip = function(toolTip) {
