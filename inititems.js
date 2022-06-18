@@ -62,7 +62,7 @@ class BlockItemStack extends ItemStack {
     blockTypeId = -1;
 
     constructor(blockType, count) {
-        super(0, count);
+        super(window.minecraft2d.itemTypes[0], count);
         this.blockTypeId = blockType.id;
     }
 

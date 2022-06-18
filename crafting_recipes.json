@@ -2,13 +2,27 @@
     {
         "ingredients": [
             {
-                "itemType": 0,
-                "blockType": 1
+                "itemTypeId": 0,
+                "blockTypeId": 1
             }
         ],
         "result": {
-            "itemType": 0,
-            "blockType": 2, 
+            "itemTypeId": 0,
+            "blockTypeId": 2, 
+            "count": 1
+        }
+    },
+    {
+        "pattern": "xx \nxx \n   ",
+        "ingredients": {
+            "x": {
+                "itemTypeId": 0,
+                "blockTypeId": 1
+            }
+        },
+        "result": {
+            "itemTypeId": 0,
+            "blockTypeId": 2, 
             "count": 1
         }
     }

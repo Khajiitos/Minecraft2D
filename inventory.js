@@ -2,6 +2,7 @@ window.minecraft2d.inventory = new Array(36).fill(null);
 window.minecraft2d.craftingInventory = new Array(4).fill(null);
 window.minecraft2d.inventoryOpen = false;
 window.minecraft2d.itemStackOnCursor = null;
+window.minecraft2d.craftResultItemStack = null;
 
 window.minecraft2d.toggleInventory = function() {
     window.minecraft2d.hideInventoryTooltip();
@@ -68,8 +69,10 @@ window.minecraft2d.updateInventorySlot = function(slotElement, itemStack, withEv
 
         if (withEvents) {
             imgElement.addEventListener('mouseover', (ev) => {
-                window.minecraft2d.showInventoryTooltip(itemStack.getName());
-                window.minecraft2d.updateInventoryTooltipPosition(ev.x, ev.y);
+                if (window.minecraft2d.itemStackOnCursor === null) {
+                    window.minecraft2d.showInventoryTooltip(itemStack.getName());
+                    window.minecraft2d.updateInventoryTooltipPosition(ev.x, ev.y);
+                }
             });
 
             imgElement.addEventListener('mouseout', (ev) => {
@@ -112,6 +115,8 @@ window.minecraft2d.updateCraftingInventory = function() {
         const element = document.getElementById(`inventorycraftingitem${i}`);
         window.minecraft2d.updateInventorySlot(element, window.minecraft2d.craftingInventory[i]);
     }
+    window.minecraft2d.craftResultItemStack = window.minecraft2d.getCraft(window.minecraft2d.craftingInventory);
+    window.minecraft2d.updateInventorySlot(document.getElementById('inventorycraftingresult'), window.minecraft2d.craftResultItemStack);
 };
 
 window.minecraft2d.areSameType = function(itemStack1, itemStack2) {
@@ -213,4 +218,32 @@ window.addEventListener('load', (ev) => {
             window.minecraft2d.hideInventoryTooltip();
         });
     }
+
+    document.getElementById('inventorycraftingresult').addEventListener('click', (ev) => {
+        if (window.minecraft2d.craftResultItemStack === null) {
+            return;
+        }
+        if (window.minecraft2d.itemStackOnCursor !== null && (!window.minecraft2d.areSameType(window.minecraft2d.itemStackOnCursor, window.minecraft2d.craftResultItemStack) || window.minecraft2d.itemStackOnCursor.count + window.minecraft2d.craftResultItemStack.count > window.minecraft2d.itemStackOnCursor.getMaxCount())) {
+            return;
+        }
+        
+        if (window.minecraft2d.itemStackOnCursor === null) {
+            window.minecraft2d.itemStackOnCursor = window.minecraft2d.craftResultItemStack;
+        } else {
+            window.minecraft2d.itemStackOnCursor.count += window.minecraft2d.craftResultItemStack.count;
+        }
+
+        for (let i = 0; i < window.minecraft2d.craftingInventory.length; i++) {
+            if (window.minecraft2d.craftingInventory[i] !== null) {
+                window.minecraft2d.craftingInventory[i].count--;
+                if (window.minecraft2d.craftingInventory[i].count <= 0) {
+                    window.minecraft2d.craftingInventory[i] = null;
+                }
+            }
+        }
+
+        window.minecraft2d.showItemOnCursor(window.minecraft2d.itemStackOnCursor);
+        window.minecraft2d.updateCraftingInventory();
+        window.minecraft2d.hideInventoryTooltip();
+    });
 })
