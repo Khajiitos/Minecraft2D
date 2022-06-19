@@ -23,7 +23,7 @@ class Entity {
         }
 
         if (this.ticksInAir > 0) {
-            const fallSpeed = Math.pow(Math.min(this.ticksInAir / 20), 2) + 0.15;
+            const fallSpeed = Math.pow(Math.min(this.ticksInAir / 20, 0.9), 2) + 0.15;
             if (minecraft2d.getBlocksIn(this.position.x - (this.boundingBoxWidth / 2.0), this.position.y - fallSpeed, this.position.x + (this.boundingBoxWidth / 2.0), this.position.y).length === 0) {
                 this.position.y -= fallSpeed;
             } else {
