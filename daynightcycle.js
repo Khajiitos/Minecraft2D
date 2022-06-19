@@ -1,4 +1,4 @@
-window.minecraft2d.gameTime = 6000; // 06:00
+minecraft2d.gameTime = 6000; // 06:00
 
 function mergeRGB(rgb1, rgb2, progress) {
     return {
@@ -12,7 +12,7 @@ function progress(start, goal, current) {
     return (start - current) / (start - goal);
 }
 
-window.minecraft2d.setBlockEntityBrightness = function(brightness) {
+minecraft2d.setBlockEntityBrightness = function(brightness) {
     const style = document.getElementById('lightcorrections');
     style.innerHTML = `
     .block, .entity {
@@ -21,9 +21,9 @@ window.minecraft2d.setBlockEntityBrightness = function(brightness) {
     `;
 }
 
-window.minecraft2d.handleDayNightCycle = function() {
-    window.minecraft2d.gameTime++;
-    const timeOfDay = window.minecraft2d.gameTime % 24000;
+minecraft2d.handleDayNightCycle = function() {
+    minecraft2d.gameTime++;
+    const timeOfDay = minecraft2d.gameTime % 24000;
 
     let rgb = {};
     let brightness = 1.0;
@@ -44,5 +44,5 @@ window.minecraft2d.handleDayNightCycle = function() {
         brightness = 0.25;
     }
     document.body.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-    window.minecraft2d.setBlockEntityBrightness(brightness);
+    minecraft2d.setBlockEntityBrightness(brightness);
 };

@@ -38,7 +38,7 @@ class ItemStack {
     }
 
     getItemType() {
-        return window.minecraft2d.itemTypes[this.itemTypeId];
+        return minecraft2d.itemTypes[this.itemTypeId];
     }
 
     getTexture() {
@@ -50,11 +50,11 @@ class ItemStack {
     }
 
     getMaxCount() {
-        return window.minecraft2d.itemTypes[this.itemTypeId].maxCount;
+        return minecraft2d.itemTypes[this.itemTypeId].maxCount;
     }
 
     getName() {
-        return window.minecraft2d.itemTypes[this.itemTypeId].name;
+        return minecraft2d.itemTypes[this.itemTypeId].name;
     }
 }
 
@@ -62,12 +62,12 @@ class BlockItemStack extends ItemStack {
     blockTypeId = -1;
 
     constructor(blockType, count) {
-        super(window.minecraft2d.itemTypes[0], count);
+        super(minecraft2d.itemTypes[0], count);
         this.blockTypeId = blockType.id;
     }
 
     getBlockType() {
-        return window.minecraft2d.blockTypes[this.blockTypeId];
+        return minecraft2d.blockTypes[this.blockTypeId];
     }
 
     getTexture() {
@@ -79,20 +79,20 @@ class BlockItemStack extends ItemStack {
     }
 
     getMaxCount() {
-        return window.minecraft2d.itemTypes[0].maxCount;
+        return minecraft2d.itemTypes[0].maxCount;
     }
 
     getName() {
-        return window.minecraft2d.blockTypes[this.blockTypeId].name;
+        return minecraft2d.blockTypes[this.blockTypeId].name;
     }
 }
 
-window.minecraft2d.ItemType = ItemType;
-window.minecraft2d.BlockItem = BlockItem;
-window.minecraft2d.ItemStack = ItemStack;
-window.minecraft2d.BlockItemStack = BlockItemStack;
+minecraft2d.ItemType = ItemType;
+minecraft2d.BlockItem = BlockItem;
+minecraft2d.ItemStack = ItemStack;
+minecraft2d.BlockItemStack = BlockItemStack;
 
-window.minecraft2d.itemTypes = [
+minecraft2d.itemTypes = [
     new BlockItem(),
     new ItemType('Stick', 'stick.png', 64),
     new ToolItem('Wooden pickaxe', 'wooden_pickaxe.png', 64),
